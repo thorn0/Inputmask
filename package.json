@@ -25,7 +25,7 @@
     "jquery": "webpack --progress --watch --config-name jquery --config webpack.config.js",
     "colormask": "webpack --progress --watch --config-name colormask --config webpack.config.js",
     "test": "grunt validate",
-    "prepublishOnly": "grunt dist"
+    "prepare": "grunt dist"
   },
   "repository": {
     "type": "git",
