@@ -7,53 +7,12 @@ module.exports = function (grunt) {
     clean: ["dist"],
     bump: {
       options: {
-        files: ["package.json", "bower.json", "composer.json"],
+        files: ["package.json"],
         updateConfigs: ["pkg"],
         commit: false,
         createTag: false,
         push: false,
         prereleaseName: "beta"
-      }
-    },
-    release: {
-      options: {
-        bump: false,
-        commit: false,
-        add: false
-      }
-    },
-    nugetpack: {
-      dist: {
-        src: (function () {
-          return "nuspecs/Inputmask.nuspec";
-        })(),
-        dest: "build/",
-        options: {
-          version: "<%= pkg.version %>"
-        }
-      },
-      dist2: {
-        src: (function () {
-          return "nuspecs/jquery.inputmask.nuspec";
-        })(),
-        dest: "build/",
-        options: {
-          version: "<%= pkg.version %>"
-        }
-      }
-    },
-    nugetpush: {
-      dist: {
-        src: "build/InputMask.<%= pkg.version %>.nupkg",
-        options: {
-          source: "https://www.nuget.org"
-        }
-      },
-      dist2: {
-        src: "build/jquery.inputMask.<%= pkg.version %>.nupkg",
-        options: {
-          source: "https://www.nuget.org"
-        }
       }
     },
     karma: {
@@ -105,12 +64,8 @@ module.exports = function (grunt) {
   // Load the plugin that provides the tasks.
   require("load-grunt-tasks")(grunt);
 
-  grunt.registerTask("publish", ["release", "nugetpack", "nugetpush"]);
-  grunt.registerTask("publishnext", function () {
-    grunt.config("release.options.npmtag", "next");
-    grunt.task.run("release");
-  });
   grunt.registerTask("validate", ["webpack", "copy", "eslint", "karma"]);
+  grunt.registerTask("dist", ["clean", "webpack", "copy"]);
   grunt.registerTask("build", ["bump:prerelease", "clean", "webpack", "copy"]);
   grunt.registerTask("build:patch", ["bump:patch", "clean", "webpack", "copy"]);
   grunt.registerTask("build:minor", ["bump:minor", "clean", "webpack", "copy"]);

@@ -1,7 +1,7 @@
 {
-  "name": "inputmask",
+  "name": "@comind/inputmask",
   "version": "5.0.10-beta.67",
-  "description": "Inputmask is a javascript library which creates an input mask.  Inputmask can run against vanilla javascript, jQuery and jqlite.",
+  "description": "Comind fork of Inputmask — a javascript library which creates an input mask. Inputmask can run against vanilla javascript, jQuery and jqlite.",
   "main": "dist/inputmask.js",
   "exports": {
     ".": "./dist/inputmask.js",
@@ -17,17 +17,19 @@
     "micromasks/"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "scripts": {
     "start": "webpack --progress --watch --config-name main --config webpack.config.js",
     "jquery": "webpack --progress --watch --config-name jquery --config webpack.config.js",
     "colormask": "webpack --progress --watch --config-name colormask --config webpack.config.js",
-    "test": "grunt validate"
+    "test": "grunt validate",
+    "prepublishOnly": "grunt dist"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RobinHerbots/Inputmask.git"
+    "url": "https://github.com/thorn0/Inputmask.git"
   },
   "keywords": [
     "form",
@@ -44,9 +46,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RobinHerbots/Inputmask/issues"
+    "url": "https://github.com/thorn0/Inputmask/issues"
   },
-  "homepage": "https://github.com/RobinHerbots/Inputmask",
+  "homepage": "https://github.com/thorn0/Inputmask",
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",
