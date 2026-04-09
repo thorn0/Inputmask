@@ -1,7 +1,6 @@
 build/
 test.html
 jquery-1.10.2.js
-dist/jQuery.InputMask.*.nupkg
 node_modules/
 bower_components/
 npm-debug.log
@@ -10,6 +9,6 @@ npm-debug.log
 qunit/qunit.js
 qunit/qunit.js.map
 **/*.map
-dist/*.LICENSE
+dist/
 local.log
 browserstack.err
