@@ -353,4 +353,240 @@ export default function (qunit, Inputmask) {
       assert.equal(unmasked, "1234567890", "Result " + unmasked);
     }
   );
+
+  // https://github.com/RobinHerbots/Inputmask/issues/2262
+  qunit.module("Decimal alias - negative with prefix (#2262)");
+
+  qunit.test(
+    'Inputmask.isValid("-$10.25", { alias: "decimal", groupSeparator: ",", prefix: "$" })',
+    function (assert) {
+      var valid = Inputmask.isValid("-$10.25", {
+        alias: "decimal",
+        groupSeparator: ",",
+        prefix: "$"
+      });
+      assert.equal(valid, true, "Result " + valid);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.isValid("-$10,000.25", { alias: "decimal", groupSeparator: ",", prefix: "$" })',
+    function (assert) {
+      var valid = Inputmask.isValid("-$10,000.25", {
+        alias: "decimal",
+        groupSeparator: ",",
+        prefix: "$"
+      });
+      assert.equal(valid, true, "Result " + valid);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-10.25", { alias: "decimal", groupSeparator: ",", prefix: "$" })',
+    function (assert) {
+      var formatted = Inputmask.format("-10.25", {
+        alias: "decimal",
+        groupSeparator: ",",
+        prefix: "$"
+      });
+      assert.equal(formatted, "-$10.25", "Result " + formatted);
+    }
+  );
+
+  // Follow-up from issue #2262: space group separator together with a space inside the prefix.
+  qunit.test(
+    'Inputmask.isValid("-\u20AC 10.25", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC " })',
+    function (assert) {
+      var valid = Inputmask.isValid("-\u20AC 10.25", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC "
+      });
+      assert.equal(valid, true, "Result " + valid);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-10.25", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC " })',
+    function (assert) {
+      var formatted = Inputmask.format("-10.25", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC "
+      });
+      assert.equal(formatted, "-\u20AC 10.25", "Result " + formatted);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-1234567.89", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC " })',
+    function (assert) {
+      var formatted = Inputmask.format("-1234567.89", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC "
+      });
+      assert.equal(formatted, "-\u20AC 1 234 567.89", "Result " + formatted);
+    }
+  );
+
+  // Symmetric case: space inside the suffix.
+  qunit.test(
+    'Inputmask.format("-1234.56", { alias: "decimal", groupSeparator: " ", suffix: " \u20AC" })',
+    function (assert) {
+      var formatted = Inputmask.format("-1234.56", {
+        alias: "decimal",
+        groupSeparator: " ",
+        suffix: " \u20AC"
+      });
+      assert.equal(formatted, "-1 234.56 \u20AC", "Result " + formatted);
+    }
+  );
+
+  // Strip-negation-when-zero path: minus on a zero value must be dropped
+  // without clobbering a prefix character that coincides with groupSeparator.
+  qunit.test(
+    'Inputmask.format("-0", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC " })',
+    function (assert) {
+      var formatted = Inputmask.format("-0", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC "
+      });
+      assert.equal(formatted, "\u20AC 0", "Result " + formatted);
+    }
+  );
+
+  // Symmetric strip-negation-when-zero path with suffix collision.
+  qunit.test(
+    'Inputmask.format("-0", { alias: "decimal", groupSeparator: " ", suffix: " \u20AC" })',
+    function (assert) {
+      var formatted = Inputmask.format("-0", {
+        alias: "decimal",
+        groupSeparator: " ",
+        suffix: " \u20AC"
+      });
+      assert.equal(formatted, "0 \u20AC", "Result " + formatted);
+    }
+  );
+
+  // Round-trip: the fully-grouped output must also be accepted as valid input.
+  qunit.test(
+    'Inputmask.isValid("-\u20AC 1 234 567.89", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC " })',
+    function (assert) {
+      var valid = Inputmask.isValid("-\u20AC 1 234 567.89", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC "
+      });
+      assert.equal(valid, true, "Result " + valid);
+    }
+  );
+
+  // Integer-style mask (radixPoint: ""): a bare negative must still collapse
+  // to zero on checkval — regression guard for the radix-less zero cleanup.
+  qunit.test(
+    'Inputmask.format("-", { alias: "integer", radixPoint: "" })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "integer",
+        radixPoint: ""
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-", { alias: "decimal", radixPoint: "", digits: 0 })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "decimal",
+        radixPoint: "",
+        digits: 0
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-", { alias: "numeric", radixPoint: "" })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "numeric",
+        radixPoint: ""
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-", { alias: "integer", placeholder: "" })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "integer",
+        placeholder: ""
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  // Radix-less with groupSeparator: an empty radixPoint replace must not
+  // inject a stray "." into the number string.
+  qunit.test(
+    'Inputmask.format("-", { alias: "numeric", radixPoint: "", groupSeparator: ",", digits: 0 })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "numeric",
+        radixPoint: "",
+        groupSeparator: ",",
+        digits: 0
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  qunit.test(
+    'Inputmask.format("-", { alias: "numeric", radixPoint: "", groupSeparator: ",", digits: 0, placeholder: "" })',
+    function (assert) {
+      var formatted = Inputmask.format("-", {
+        alias: "numeric",
+        radixPoint: "",
+        groupSeparator: ",",
+        digits: 0,
+        placeholder: ""
+      });
+      assert.equal(formatted, "0", "Result " + formatted);
+    }
+  );
+
+  // Parenthetical negation with prefix/groupSeparator collision.
+  qunit.test(
+    'Inputmask.format("-1234.56", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC ", negationSymbol: { front: "(", back: ")" } })',
+    function (assert) {
+      var formatted = Inputmask.format("-1234.56", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC ",
+        negationSymbol: { front: "(", back: ")" }
+      });
+      assert.equal(
+        formatted,
+        "(\u20AC 1 234.56)",
+        "Result " + formatted
+      );
+    }
+  );
+
+  qunit.test(
+    'Inputmask.isValid("(\u20AC 1 234.56)", { alias: "decimal", groupSeparator: " ", prefix: "\u20AC ", negationSymbol: { front: "(", back: ")" } })',
+    function (assert) {
+      var valid = Inputmask.isValid("(\u20AC 1 234.56)", {
+        alias: "decimal",
+        groupSeparator: " ",
+        prefix: "\u20AC ",
+        negationSymbol: { front: "(", back: ")" }
+      });
+      assert.equal(valid, true, "Result " + valid);
+    }
+  );
 }
