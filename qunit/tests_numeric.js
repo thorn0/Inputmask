@@ -2155,6 +2155,132 @@ export default function (qunit, Inputmask) {
   });
 
   qunit.test(
+    "numeric - type .5 prepends 0 during input (#2561)",
+    function (assert) {
+      const done = assert.async();
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric").mask(testmask);
+      testmask.focus();
+      $("#testmask").trigger("click");
+      setTimeout(function () {
+        $("#testmask").Type(".5");
+        assert.equal(testmask.value, "0.5", "Result " + testmask.value);
+        done();
+      }, 0);
+    }
+  );
+
+  qunit.test(
+    "numeric + suffix - type .5 prepends 0 during input (#2561)",
+    function (assert) {
+      const done = assert.async();
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric", { suffix: " %" }).mask(testmask);
+      testmask.focus();
+      $("#testmask").trigger("click");
+      setTimeout(function () {
+        $("#testmask").Type(".5");
+        assert.equal(testmask.value, "0.5 %", "Result " + testmask.value);
+        done();
+      }, 0);
+    }
+  );
+
+  qunit.test(
+    "numeric + prefix - type .5 prepends 0 during input (#2561)",
+    function (assert) {
+      const done = assert.async();
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric", { prefix: "$ " }).mask(testmask);
+      testmask.focus();
+      $("#testmask").trigger("click");
+      setTimeout(function () {
+        $("#testmask").Type(".5");
+        assert.equal(testmask.value, "$ 0.5", "Result " + testmask.value);
+        done();
+      }, 0);
+    }
+  );
+
+  qunit.test(
+    "numeric - val .5 then blur prepends 0 (#2561)",
+    function (assert) {
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric").mask(testmask);
+      testmask.focus();
+      $("#testmask").val(".5");
+      testmask.blur();
+      assert.equal(testmask.value, "0.5", "Result " + testmask.value);
+    }
+  );
+
+  qunit.test(
+    "numeric + suffix - val .5 then blur prepends 0 (#2561)",
+    function (assert) {
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric", { suffix: " %" }).mask(testmask);
+      testmask.focus();
+      $("#testmask").val(".5");
+      testmask.blur();
+      assert.equal(testmask.value, "0.5 %", "Result " + testmask.value);
+    }
+  );
+
+  qunit.test(
+    "numeric + prefix - val .5 then blur prepends 0 (#2561)",
+    function (assert) {
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric", { prefix: "$ " }).mask(testmask);
+      testmask.focus();
+      $("#testmask").val(".5");
+      testmask.blur();
+      assert.equal(testmask.value, "$ 0.5", "Result " + testmask.value);
+    }
+  );
+
+  qunit.test(
+    "numeric - val -.5 then blur prepends 0 (#2561)",
+    function (assert) {
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric").mask(testmask);
+      testmask.focus();
+      $("#testmask").val("-.5");
+      testmask.blur();
+      assert.equal(testmask.value, "-0.5", "Result " + testmask.value);
+    }
+  );
+
+  qunit.test(
+    "numeric + (negationSymbol = parentheses) - val -.5 then blur prepends 0 (#2561)",
+    function (assert) {
+      const $fixture = $("#qunit-fixture");
+      $fixture.append('<input type="text" id="testmask" />');
+      const testmask = document.getElementById("testmask");
+      Inputmask("numeric", {
+        negationSymbol: { front: "(", back: ")" }
+      }).mask(testmask);
+      testmask.focus();
+      $("#testmask").val("-.5");
+      testmask.blur();
+      assert.equal(testmask.value, "(0.5)", "Result " + testmask.value);
+    }
+  );
+
+  qunit.test(
     "numeric + (negationSymbol = parentheses) + (clearIncomplete = true) + type -123. then blur",
     function (assert) {
       const $fixture = $("#qunit-fixture");
