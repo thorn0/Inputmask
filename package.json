@@ -1,6 +1,6 @@
 {
   "name": "@comind/inputmask",
-  "version": "5.0.10-comind.5",
+  "version": "5.0.10-comind.6",
   "description": "Comind fork of Inputmask — a javascript library which creates an input mask. Inputmask can run against vanilla javascript, jQuery and jqlite.",
   "main": "dist/inputmask.js",
   "exports": {
