@@ -1,6 +1,6 @@
 # Inputmask
 
-> **Comind fork.** Published on npm as [`@comind/inputmask`](https://www.npmjs.com/package/@comind/inputmask). Upstream: <https://github.com/RobinHerbots/Inputmask>. Fixes land here first and are later cherry-picked upstream as PRs.
+> **Comind fork.** Published on npm as [`@thorn0/inputmask`](https://www.npmjs.com/package/@thorn0/inputmask). Upstream: <https://github.com/RobinHerbots/Inputmask>. Fixes land here first and are later cherry-picked upstream as PRs.
 
 Copyright (c) 2010 - 2023 Robin Herbots Licensed under the MIT license (<https://opensource.org/licenses/MIT>)
 
