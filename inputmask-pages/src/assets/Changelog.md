@@ -7,6 +7,8 @@
 - set regex unicode flag when using \p{.\*}
 - add outputFormat option #2526
 - add FormData support for inputmask #2409
+- add "follow" casing option
+- add mjs export
 
 ### Updates
 
@@ -17,10 +19,16 @@
     - minutes: m, mm
     - day: d, dd, D, DD
     - year: yy, yyyy, YY, YYYY
+  - add alias for month names (mmm, mmmm)
+  - add casing option support to format month names
 - fix: Inputmask works weird under ShadowDOM #2753
 
 ### Fixed
 
+- Incompatibility with vite 8 #2884
+- Also one thing: If I have a date pattern dd-mmm-yyyy, month name is always lowercase. #2870
+- Currency alias. Move carret before prefix by arrows, input not work. #2615
+- Numeric input with prefix (currency) caret issue #1367
 - Update Vue property on autocomplite #2304
 - Minus is being deleted with the first digit #2860
 - Alternating mask gets stuck when typing alphanumeric value after starting with digits (CPF/CNPJ case) #2871
