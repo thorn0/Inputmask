@@ -4068,4 +4068,89 @@ export default function (qunit, Inputmask) {
       }, 0);
     }
   );
+  // radixFocus pulls the caret to the radix point when the field holds no
+  // number yet. It judged that by looking at the integer digits alone, and
+  // the numeric placeholder is "0", so a value whose integer part is 0 was
+  // taken for an empty field however much was behind the radix - clicking in
+  // front of the 0 was impossible. #2623
+  [
+    { label: "fraction entered", val: "0.500", expected: "10.500" },
+    { label: "small fraction entered", val: "0.001", expected: "10.001" },
+    { label: "non-zero integer", val: "10.000", expected: "110.000" }
+  ].forEach(function (tc) {
+    qunit.test(
+      "numeric - clicking in front of a leading zero honours the caret (" +
+        tc.label +
+        ")",
+      function (assert) {
+        const done = assert.async(),
+          $fixture = $("#qunit-fixture");
+        $fixture.append(
+          '<input type="text" id="testmask" value="' + tc.val + '" />'
+        );
+        const testmask = document.getElementById("testmask");
+        Inputmask({
+          alias: "numeric",
+          digits: 3,
+          digitsOptional: false
+        }).mask(testmask);
+
+        testmask.focus();
+        setTimeout(function () {
+          $.caret(testmask, 0);
+          $("#testmask").trigger("click");
+          setTimeout(function () {
+            $("#testmask").Type("1");
+            setTimeout(function () {
+              assert.equal(
+                testmask.value,
+                tc.expected,
+                "Result " + testmask.value
+              );
+              done();
+            }, 0);
+          }, 0);
+        }, 0);
+      }
+    );
+  });
+
+  // a value that holds no number keeps the radix focus - typing replaces the
+  // placeholder zero rather than prepending to it
+  [
+    { label: "zero value", val: "0.000" },
+    { label: "empty", val: "" }
+  ].forEach(function (tc) {
+    qunit.test(
+      "numeric - radixFocus still applies when there is no number (" +
+        tc.label +
+        ")",
+      function (assert) {
+        const done = assert.async(),
+          $fixture = $("#qunit-fixture");
+        $fixture.append(
+          '<input type="text" id="testmask" value="' + tc.val + '" />'
+        );
+        const testmask = document.getElementById("testmask");
+        Inputmask({
+          alias: "numeric",
+          digits: 3,
+          digitsOptional: false
+        }).mask(testmask);
+
+        testmask.focus();
+        setTimeout(function () {
+          $.caret(testmask, 0);
+          $("#testmask").trigger("click");
+          setTimeout(function () {
+            $("#testmask").Type("1");
+            setTimeout(function () {
+              assert.equal(testmask.value, "1.000", "Result " + testmask.value);
+              done();
+            }, 0);
+          }, 0);
+        }, 0);
+      }
+    );
+  });
 }
