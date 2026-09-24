@@ -1,5 +1,7 @@
 # Inputmask
 
+> **Comind fork.** Published on npm as [`@thorn0/inputmask`](https://www.npmjs.com/package/@thorn0/inputmask). Upstream: <https://github.com/RobinHerbots/Inputmask>. Fixes land here first and are later cherry-picked upstream as PRs.
+
 Copyright (c) 2010 - 2026 Robin Herbots Licensed under the MIT license (<https://opensource.org/licenses/MIT>)
 
 The Inputmask has a very permissive license and this will stay that way. But when you use the Inputmask in a commercial setting, be so honest to make a small donation.
