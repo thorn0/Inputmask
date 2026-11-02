@@ -1,3 +1,5 @@
+Temporary Comind fork of Inputmask 5.1.0-beta.40. The only runtime change is faster copying of resolved mask rules, proposed upstream in https://github.com/RobinHerbots/Inputmask/pull/2908.
+
 # Inputmask
 
 Copyright (c) 2010 - 2026 Robin Herbots Licensed under the MIT license (<https://opensource.org/licenses/MIT>)

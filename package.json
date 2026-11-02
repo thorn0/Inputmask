@@ -1,7 +1,7 @@
 {
-  "name": "inputmask",
-  "version": "5.1.0-beta.40",
-  "description": "Inputmask is a javascript library which creates an input mask.  Inputmask can run against vanilla javascript, jQuery and jqlite.",
+  "name": "@thorn0/inputmask",
+  "version": "5.1.0-beta.40-comind.1",
+  "description": "Temporary Comind fork of Inputmask with faster copying of resolved mask rules.",
   "main": "dist/inputmask.js",
   "module": "dist/esm/inputmask.mjs",
   "types": "dist/types/index.d.ts",
@@ -77,7 +77,8 @@
     "packages/*"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "scripts": {
     "build": "node build.js",
@@ -109,11 +110,12 @@
     "publish:packages:dry": "npm run verify:packages && npm run publish:react -- --dry-run && npm run publish:vue -- --dry-run && npm run publish:svelte -- --dry-run && npm run publish:angular -- --dry-run && npm run publish:jquery -- --dry-run",
     "publish:packages:next": "npm run verify:packages && npm run publish:react -- --tag next && npm run publish:vue -- --tag next && npm run publish:svelte -- --tag next && npm run publish:angular -- --tag next && npm run publish:jquery -- --tag next",
     "lint": "eslint lib/**/*.js --ignore-pattern lib/.rollup/** --ignore-pattern lib/extensions/.rollup/**",
-    "update-browserlist": "npx update-browserslist-db@latest"
+    "update-browserlist": "npx update-browserslist-db@latest",
+    "prepack": "npm run build && npm run types"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RobinHerbots/Inputmask.git"
+    "url": "git+https://github.com/thorn0/Inputmask.git"
   },
   "keywords": [
     "form",
@@ -130,9 +132,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RobinHerbots/Inputmask/issues"
+    "url": "https://github.com/thorn0/Inputmask/issues"
   },
-  "homepage": "https://github.com/RobinHerbots/Inputmask",
+  "homepage": "https://github.com/thorn0/Inputmask",
   "devDependencies": {
     "@babel/core": "^8.0.7",
     "@babel/eslint-parser": "^8.0.1",
